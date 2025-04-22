@@ -37,16 +37,16 @@
                         <div class="collapse " id="sidebarTransactions">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="?pages=pengguna">Data Pengguna</a>
+                                    <a class="nav-link" href="?page=pengguna">Data Pengguna</a>
                                 </li><!--end nav-item-->
                                 <li class="nav-item">
-                                    <a class="nav-link" href="?pages=barang">Data Barang</a>
+                                    <a class="nav-link" href="?page=barang">Data Barang</a>
                                 </li><!--end nav-item-->
                                 <li class="nav-item">
-                                    <a class="nav-link" href="?pages=supplier">Data Supplier</a>
+                                    <a class="nav-link" href="?page=supplier">Data Supplier</a>
                                 </li><!--end nav-item-->
                                 <li class="nav-item">
-                                    <a class="nav-link" href="?pages=akun">Data Akun</a>
+                                    <a class="nav-link" href="?page=akun">Data Akun</a>
                                 </li><!--end nav-item-->
                             </ul><!--end nav-->
                         </div><!--end startbarTables-->

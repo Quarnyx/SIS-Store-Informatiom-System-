@@ -1,0 +1,71 @@
+<?php
+include "../../config.php";
+$sql = "SELECT * FROM pengguna WHERE id_pengguna = '$_POST[id]'";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+}
+?>
+<form id="form-edit" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="<?= $row['id_pengguna'] ?>">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="mb-3">
+                <label for="nama" class="form-label">Nama</label>
+                <input type="text" class="form-control " name="nama" id="nama" placeholder="Nama"
+                    value="<?= $row['nama'] ?>">
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control " name="username" id="username" placeholder="Username"
+                    value="<?= $row['username'] ?>">
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="mb-3">
+                <label for="level" class="form-label">Level</label>
+                <select class="form-select" name="level" id="selector">
+                    <option value="Admin" <?php if ($row['level'] == 'Admin')
+                        echo 'selected' ?>>Admin</option>
+                        <option value="Kasir" <?php if ($row['level'] == 'Kasir')
+                        echo 'selected' ?>>Kasir</option>
+                        <option value="Pimpinan" <?php if ($row['level'] == 'Pimpinan')
+                        echo 'selected' ?>>Pimpinan</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">SImpan</button>
+    </form>
+    <script>
+        $(document).ready(function () {
+            new Selectr('#selector');
+
+        })
+        $("#form-edit").submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: 'proses.php?aksi=edit-pengguna',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data == "ok") {
+                        loadTable();
+                        $('.modal').modal('hide');
+                        alertify.success('Edit Berhasil');
+
+                    } else {
+                        alertify.error('Edit Gagal');
+
+                    }
+                },
+                error: function (data) {
+                    alertify.error(data);
+                }
+            });
+        });
+    </script>
