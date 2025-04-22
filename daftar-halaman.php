@@ -11,8 +11,8 @@ switch ($_GET['page'] ?? '') {
     case 'supplier':
         include 'halaman/supplier/index.php';
         break;
-    case 'produk':
-        include 'halaman/produk/index.php';
+    case 'barang':
+        include 'halaman/barang/index.php';
         break;
     case 'akun':
         include 'halaman/akun/index.php';

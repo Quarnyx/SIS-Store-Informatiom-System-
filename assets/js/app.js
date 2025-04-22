@@ -86,7 +86,7 @@ try {
 
 try {
 
-   
+
     changeSidebarSize();
 
     // Add event listener for window resize
@@ -152,9 +152,10 @@ const initVerticalMenu = () => {
     if (document.querySelector(".navbar-nav")) {
         // Activate the menu in left side bar based on url
         document.querySelectorAll(".navbar-nav a").forEach(function (link) {
-            var pageUrl = window.location.href.split(/[?#]/)[0];
-
-            if (link.href === pageUrl) {
+            var pageUrl = window.location.search.split('&')[0];
+            var parURL = window.location.href.split(/[?#]/)[0];
+            var combineUrl = parURL + pageUrl;
+            if (link.href === combineUrl) {
                 link.classList.add("active");
                 link.parentNode.classList.add("active");
 
