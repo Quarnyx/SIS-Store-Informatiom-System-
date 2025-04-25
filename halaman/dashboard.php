@@ -3,13 +3,6 @@
         <div class="col-sm-12">
             <div class="page-title-box d-md-flex justify-content-md-between align-items-center">
                 <h4 class="page-title">Dashboard</h4>
-                <div class="">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="#">Approx</a>
-                        </li><!--end nav-item-->
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ol>
-                </div>
             </div><!--end page-title-box-->
         </div><!--end col-->
     </div><!--end row-->
@@ -29,31 +22,29 @@
                         </div><!--end card-body-->
                     </div><!--end card-->
                 </div><!--end col-->
+                <?php
+                require_once 'config.php';
+                ?>
                 <div class="col-md-6">
                     <div class="card bg-globe-img">
                         <div class="card-body">
                             <div>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fs-16 fw-semibold">Balance</span>
-                                    <form class="">
-                                        <select id="dynamic-select" name="example-select"
-                                            data-placeholder="Select an option" data-dynamic-select>
-                                            <option value="1" data-img="assets/images/logos/m-card.png">xx25
-                                            </option>
-                                            <option value="2" data-img="assets/images/logos/ame-bank.png">
-                                                xx56</option>
-                                        </select>
-                                    </form>
-                                </div>
+                                    <span class="fs-16 fw-semibold">Saldo</span>
 
-                                <h4 class="my-2 fs-24 fw-semibold">122.5692.00 <small class="font-14">BTC</small></h4>
+                                </div>
+                                <?php
+                                $sql = "SELECT sum(debit) - sum(kredit) AS saldo FROM jurnal WHERE id_akun = 4";
+                                $result = $conn->query($sql);
+                                $row = $result->fetch_assoc();
+
+                                ?>
+                                <h4 class="my-2 fs-24 fw-semibold">Rp <?php echo number_format($row['saldo'], 2); ?>
+                                </h4>
                                 <p class="mb-3 text-muted fw-semibold">
-                                    <span class="text-success"><i class="fas fa-arrow-up me-1"></i>11.1%</span>
-                                    Outstanding
-                                    balance boost
+                                    Saldo akun kas yang tersedia
                                 </p>
-                                <button type="submit" class="btn btn-soft-primary">Transfer</button>
-                                <button type="button" class="btn btn-soft-danger">Request</button>
+                                <a href="?page=jurnal" class="btn btn-soft-primary">Lihat Jurnal</a>
                             </div>
                         </div><!--end card-body-->
                     </div><!--end card-->
@@ -67,9 +58,17 @@
                         <div class="card-body">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-9">
-                                    <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Revenue
+                                    <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Pendapatan
                                     </p>
-                                    <h4 class="mt-1 mb-0 fw-medium">$8365.00</h4>
+                                    <?php
+                                    require_once 'config.php';
+                                    $sql = "SELECT sum(kredit) AS pendapatan FROM jurnal WHERE id_akun = 5 AND MONTH(tanggal_transaksi) = MONTH(CURDATE()) AND YEAR(tanggal_transaksi) = YEAR(CURDATE()) ";
+                                    $result = $conn->query($sql);
+                                    $row = $result->fetch_assoc();
+                                    ?>
+                                    <h4 class="mt-1 mb-0 fw-medium">Rp
+                                        <?php echo number_format($row['pendapatan'], 2); ?>
+                                    </h4>
                                 </div>
                                 <!--end col-->
                                 <div class="col-3 align-self-center">
@@ -92,8 +91,14 @@
                         <div class="card-body">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-9">
-                                    <p class="text-muted text-uppercase mb-0 fw-normal fs-13">New Order</p>
-                                    <h4 class="mt-1 mb-0 fw-medium">722</h4>
+                                    <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Transaksi Penjualan</p>
+                                    <?php
+                                    $sql = "SELECT count(kode_penjualan) AS penjualan FROM penjualan WHERE MONTH(tanggal_transaksi) = MONTH(CURDATE()) AND YEAR(tanggal_transaksi) = YEAR(CURDATE())";
+                                    $result = $conn->query($sql);
+                                    $row = $result->fetch_assoc();
+
+                                    ?>
+                                    <h4 class="mt-1 mb-0 fw-medium"><?php echo $row['penjualan']; ?></h4>
                                 </div>
                                 <!--end col-->
                                 <div class="col-3 align-self-center">
@@ -116,8 +121,13 @@
                         <div class="card-body">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-9">
-                                    <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Sessions</p>
-                                    <h4 class="mt-1 mb-0 fw-medium">181</h4>
+                                    <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Jumlah Barang</p>
+                                    <?php
+                                    $sql = "SELECT count(kode_barang) AS barang FROM barang";
+                                    $result = $conn->query($sql);
+                                    $row = $result->fetch_assoc();
+                                    ?>
+                                    <h4 class="mt-1 mb-0 fw-medium"><?php echo $row['barang']; ?></h4>
                                 </div>
                                 <!--end col-->
                                 <div class="col-3 align-self-center">
@@ -142,9 +152,14 @@
                         <div class="card-body">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-9">
-                                    <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Avg. Order
-                                        value</p>
-                                    <h4 class="mt-1 mb-0 fw-medium">$1025.50</h4>
+                                    <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Rata-rata Pendapatan</p>
+                                    <?php
+                                    $sql = "SELECT avg(kredit) AS pendapatan FROM jurnal WHERE id_akun = 5 AND MONTH(tanggal_transaksi) = MONTH(CURDATE()) AND YEAR(tanggal_transaksi) = YEAR(CURDATE()) ";
+                                    $result = $conn->query($sql);
+                                    $row = $result->fetch_assoc();
+                                    ?>
+                                    <h4 class="mt-1 mb-0 fw-medium"><?php echo number_format($row['pendapatan'], 2); ?>
+                                    </h4>
                                 </div>
                                 <!--end col-->
                                 <div class="col-3 align-self-center">
@@ -176,21 +191,6 @@
                         <div class="col">
                             <h4 class="card-title">Report</h4>
                         </div><!--end col-->
-                        <div class="col-auto">
-                            <div class="dropdown">
-                                <a href="#" class="btn bt btn-light dropdown-toggle" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <i class="icofont-calendar fs-5 me-1"></i> This Month<i
-                                        class="las la-angle-down ms-1"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Today</a>
-                                    <a class="dropdown-item" href="#">Last Week</a>
-                                    <a class="dropdown-item" href="#">Last Month</a>
-                                    <a class="dropdown-item" href="#">This Year</a>
-                                </div>
-                            </div>
-                        </div><!--end col-->
                     </div> <!--end row-->
                 </div><!--end card-header-->
                 <div class="card-body pt-0">
@@ -206,7 +206,7 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h4 class="card-title">Exchange Rate</h4>
+                            <h4 class="card-title">Stok Barang</h4>
                         </div><!--end col-->
                     </div> <!--end row-->
                 </div><!--end card-header-->
@@ -214,110 +214,175 @@
                     <div class="table-responsive">
                         <table class="table mb-0">
                             <tbody>
-                                <tr class="">
-                                    <td class="px-0">
-                                        <div class="d-flex align-items-center">
-                                            <img src="assets/images/flags/us_flag.jpg"
-                                                class="me-2 align-self-center thumb-sm rounded-circle" alt="...">
-                                            <h6 class="m-0 text-truncate">USA</h6>
-                                        </div><!--end media-->
-                                    </td>
-                                    <td class="px-0 text-end"><span
-                                            class="text-body ps-2 align-self-center text-end fw-medium">0.835230
-                                            <span
-                                                class="badge rounded text-success bg-success-subtle">1.10%</span></span>
-                                    </td>
-                                </tr><!--end tr-->
-                                <tr class="">
-                                    <td class="px-0">
-                                        <div class="d-flex align-items-center">
-                                            <img src="assets/images/flags/spain_flag.jpg"
-                                                class="me-2 align-self-center thumb-sm rounded-circle" alt="...">
-                                            <h6 class="m-0 text-truncate">Spain</h6>
-                                        </div><!--end media-->
-                                    </td>
-                                    <td class="px-0 text-end"><span
-                                            class="text-body ps-2 align-self-center text-end fw-medium">0.896532
-                                            <span
-                                                class="badge rounded text-success bg-success-subtle">0.91%</span></span>
-                                    </td>
-                                </tr><!--end tr-->
-                                <tr class="">
-                                    <td class="px-0">
-                                        <div class="d-flex align-items-center">
-                                            <img src="assets/images/flags/french_flag.jpg"
-                                                class="me-2 align-self-center thumb-sm rounded-circle" alt="...">
-                                            <h6 class="m-0 text-truncate">French</h6>
-                                        </div><!--end media-->
-                                    </td>
-                                    <td class="px-0 text-end"><span
-                                            class="text-body ps-2 align-self-center text-end fw-medium">0.875433
-                                            <span class="badge rounded text-danger bg-danger-subtle">0.11%</span></span>
-                                    </td>
-                                </tr><!--end tr-->
-                                <tr class="">
-                                    <td class="px-0">
-                                        <div class="d-flex align-items-center">
-                                            <img src="assets/images/flags/germany_flag.jpg"
-                                                class="me-2 align-self-center thumb-sm rounded-circle" alt="...">
-                                            <h6 class="m-0 text-truncate">Germany</h6>
-                                        </div><!--end media-->
-                                    </td>
-                                    <td class="px-0 text-end"><span
-                                            class="text-body ps-2 align-self-center text-end fw-medium">0.795621
-                                            <span
-                                                class="badge rounded text-success bg-success-subtle">0.85%</span></span>
-                                    </td>
-                                </tr><!--end tr-->
-                                <tr class="">
-                                    <td class="px-0">
-                                        <div class="d-flex align-items-center">
-                                            <img src="assets/images/flags/french_flag.jpg"
-                                                class="me-2 align-self-center thumb-sm rounded-circle" alt="...">
-                                            <h6 class="m-0 text-truncate">French</h6>
-                                        </div><!--end media-->
-                                    </td>
-                                    <td class="px-0 text-end"><span
-                                            class="text-body ps-2 align-self-center text-end fw-medium">0.875433
-                                            <span class="badge rounded text-danger bg-danger-subtle">0.11%</span></span>
-                                    </td>
-                                </tr><!--end tr-->
-                                <tr class="">
-                                    <td class="px-0 pb-0">
-                                        <div class="d-flex align-items-center">
-                                            <img src="assets/images/flags/baha_flag.jpg"
-                                                class="me-2 align-self-center thumb-sm rounded-circle" alt="...">
-                                            <h6 class="m-0 text-truncate">Bahamas</h6>
-                                        </div><!--end media-->
-                                    </td>
-                                    <td class="px-0 pb-0 text-end"><span
-                                            class="text-body ps-2 align-self-center text-end fw-medium">0.845236
-                                            <span class="badge rounded text-danger bg-danger-subtle">0.22%</span></span>
-                                    </td>
-                                </tr><!--end tr-->
+                                <?php
+                                $sql = "SELECT * FROM stok ORDER BY stok ASC LIMIT 5";
+                                $result = $conn->query($sql);
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td>" . $row['nama_barang'] . "</td>";
+                                    echo "<td>" . $row['stok'] . "</td>";
+                                    echo "</tr>";
+                                }
+                                ?>
                             </tbody>
                         </table> <!--end table-->
                     </div><!--end /div-->
                     <hr class="hr-dashed">
-                    <div class="row">
-                        <div class="col-lg-6 text-center">
-                            <div class="p-2 border-dashed border-theme-color rounded">
-                                <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Higher Rate</p>
-                                <h5 class="mt-1 mb-0 fw-medium text-success">0.833658</h5>
-                                <small>05 Sep 2024</small>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-lg-6 text-center">
-                            <div class="p-2 border-dashed border-theme-color rounded">
-                                <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Lower Rate</p>
-                                <h5 class="mt-1 mb-0 fw-medium text-danger">0.812547</h5>
-                                <small>05 Sep 2024</small>
-                            </div>
-                        </div><!--end col-->
-                    </div><!--end row-->
+
                 </div><!--end card-body-->
             </div><!--end card-->
         </div> <!--end col-->
     </div><!--end row-->
 
 </div>
+<?php
+$sqljual = "SELECT
+                YEAR(tanggal_transaksi) AS year,
+                MONTH(tanggal_transaksi) AS month,
+                COUNT(*) AS sales_count
+            FROM
+	            v_keranjang
+                WHERE YEAR(tanggal_transaksi) = YEAR(CURDATE())
+            GROUP BY year, month";
+$sqlbeli = "SELECT
+                YEAR(tanggal_masuk) AS year,
+                MONTH(tanggal_masuk) AS month,
+                COUNT(*) AS buys_count
+            FROM
+	            v_pembelian
+                WHERE YEAR(tanggal_masuk) = YEAR(CURDATE())
+            GROUP BY year, month";
+
+$sales_result = $conn->query($sqljual);
+$sales_data = [];
+
+if ($sales_result->num_rows > 0) {
+    while ($row = $sales_result->fetch_assoc()) {
+        $sales_data[] = $row;
+    }
+}
+
+$buys_result = $conn->query($sqlbeli);
+$buys_data = [];
+
+if ($buys_result->num_rows > 0) {
+    while ($row = $buys_result->fetch_assoc()) {
+        $buys_data[] = $row;
+    }
+}
+
+// Preparing data for ApexCharts
+$months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+$sales_counts = array_fill(0, 12, 0);  // Initialize an array with 12 zeros
+$buys_counts = array_fill(0, 12, 0);   // Initialize an array with 12 zeros
+
+// Map buys data to corresponding months
+foreach ($buys_data as $data) {
+    $buys_counts[$data['month'] - 1] = $data['buys_count'];
+}
+// echo "<pre>";
+// print_r($buys_counts);
+// echo "</pre>";
+// Map sales data to corresponding months
+foreach ($sales_data as $data) {
+    $sales_counts[$data['month'] - 1] = $data['sales_count'];
+}
+// echo "<pre>";
+// print_r($sales_counts);
+// echo "</pre>";
+
+
+
+$conn->close();
+?>
+<script>
+    const salesCounts = <?php echo json_encode($sales_counts); ?>;
+    const buysCounts = <?php echo json_encode($buys_counts); ?>;
+    const months = <?php echo json_encode($months); ?>;
+    var chart = {
+        series: [
+            {
+                name: "Pendapatan",
+                data: salesCounts
+            },
+            {
+                name: "Pembelian",
+                data: buysCounts
+            },
+        ],
+        chart: {
+            toolbar: {
+                show: false,
+            },
+            type: "bar",
+            fontFamily: "inherit",
+            foreColor: "#adb0bb",
+            height: 370,
+            stacked: true,
+            offsetX: -15,
+        },
+        colors: ["var(--bs-success)", "rgba(155, 171, 187, .25)"],
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                barHeight: "80%",
+                columnWidth: "20%",
+                borderRadius: [3],
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        legend: {
+            show: false,
+        },
+        grid: {
+            show: true,
+            strokeDashArray: 3,
+            padding: {
+                top: 0,
+                bottom: 0,
+                right: 0,
+            },
+            borderColor: "rgba(0,0,0,0.05)",
+            xaxis: {
+                lines: {
+                    show: true,
+                },
+            },
+            yaxis: {
+                lines: {
+                    show: false,
+                },
+            },
+        },
+        yaxis: {
+            min: -5,
+            max: 5,
+        },
+        xaxis: {
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                show: false,
+            },
+            categories: months,
+        },
+        yaxis: {
+            tickAApprox: 4,
+            labels: {
+                show: true,
+                formatter: function (val) {
+                    return val + " Transaksi";
+                }
+            }
+        },
+    };
+
+    var chart = new ApexCharts(
+        document.querySelector("#reports"),
+        chart
+    );
+    chart.render();
+</script>
