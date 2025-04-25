@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['username'] = $user['username'];
             $_SESSION['nama'] = $user['nama'];
             $_SESSION['level'] = $user['level'];
+            $_SESSION['id_pengguna'] = $user['id_pengguna'];
 
             header('Location: index.php');
         } else {

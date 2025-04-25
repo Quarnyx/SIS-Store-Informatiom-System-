@@ -22,7 +22,8 @@ switch ($_GET['aksi'] ?? '') {
         $nama_akun = $_POST['nama_akun'];
         $jenis_akun = $_POST['jenis_akun'];
         $kode_akun = $_POST['kode_akun'];
-        $sql = "UPDATE akun SET nama_akun = '$nama_akun',jenis_akun = '$jenis_akun',kode_akun = '$kode_akun' WHERE id_akun =
+        $akun_wajib = $_POST['akun_wajib'];
+        $sql = "UPDATE akun SET nama_akun = '$nama_akun',jenis_akun = '$jenis_akun',kode_akun = '$kode_akun', wajib = '$akun_wajib' WHERE id_akun =
 '$id'";
         $result = $conn->query($sql);
         if ($result) {
