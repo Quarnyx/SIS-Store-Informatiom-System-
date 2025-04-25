@@ -48,7 +48,7 @@ switch ($_GET['aksi'] ?? '') {
         break;
     case 'ganti-password':
         $id = $_POST['id'];
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $password = md5($_POST['password']);
         $sql = "UPDATE pengguna SET password = '$password' WHERE id_pengguna = '$id'";
         $result = $conn->query($sql);
         if ($result) {

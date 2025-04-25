@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 25/04/2025 23:22:23
+ Date: 26/04/2025 00:08:22
 */
 
 SET NAMES utf8mb4;
@@ -54,13 +54,14 @@ CREATE TABLE `barang`  (
   `satuan` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `foto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_barang`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of barang
 -- ----------------------------
 INSERT INTO `barang` VALUES (1, 'Indomie', 'aaaaaaaaa', 2400.00, 5000.00, 'PCS-001', 'PCS', 'PCS-001.png');
 INSERT INTO `barang` VALUES (3, 'Pepsodent', 'adasdasdasdasdada', 5000.00, 6000.00, 'PCS-002', 'PCS', 'PCS-002.png');
+INSERT INTO `barang` VALUES (4, 'Barang A', 'alkdlakdlksldklakdlkaldkladlalda', 50000.00, 55000.00, 'BOX-001', 'BOX', 'BOX-001.png');
 
 -- ----------------------------
 -- Table structure for keranjang
@@ -78,7 +79,7 @@ CREATE TABLE `keranjang`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `id_barang`(`id_barang` ASC) USING BTREE,
   CONSTRAINT `keranjang_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of keranjang
@@ -86,6 +87,8 @@ CREATE TABLE `keranjang`  (
 INSERT INTO `keranjang` VALUES (1, 'INV-001', 1, '2025-04-25', 5000.00, 50, 250000.00, 2400.00);
 INSERT INTO `keranjang` VALUES (5, 'INV-002', 3, '2025-04-25', 6000.00, 2, 12000.00, 5000.00);
 INSERT INTO `keranjang` VALUES (6, 'INV-002', 1, '2025-04-25', 5000.00, 1, 5000.00, 2400.00);
+INSERT INTO `keranjang` VALUES (7, 'INV-003', 4, '2025-04-25', 55000.00, 1, 55000.00, 50000.00);
+INSERT INTO `keranjang` VALUES (8, 'INV-003', 3, '2025-04-25', 6000.00, 1, 6000.00, 5000.00);
 
 -- ----------------------------
 -- Table structure for pembelian
@@ -107,13 +110,14 @@ CREATE TABLE `pembelian`  (
   CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `pembelian_ibfk_2` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `pembelian_ibfk_3` FOREIGN KEY (`id_supplier`) REFERENCES `supplier` (`id_supplier`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pembelian
 -- ----------------------------
 INSERT INTO `pembelian` VALUES (2, 1, '2025-04-23', 'PBL-001', 5, 1000, 2400.00, 1);
 INSERT INTO `pembelian` VALUES (3, 3, '2025-04-25', 'PBL-002', 5, 1000, 5000.00, 1);
+INSERT INTO `pembelian` VALUES (4, 4, '2025-04-25', 'PBL-003', 5, 2, 50000.00, 3);
 
 -- ----------------------------
 -- Table structure for pengguna
@@ -126,12 +130,13 @@ CREATE TABLE `pengguna`  (
   `level` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_pengguna`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pengguna
 -- ----------------------------
 INSERT INTO `pengguna` VALUES (5, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'Admin');
+INSERT INTO `pengguna` VALUES (7, 'kasir', 'de28f8f7998f23ab4194b51a6029416f', 'Kasir', 'Kasir');
 
 -- ----------------------------
 -- Table structure for penjualan
@@ -146,13 +151,14 @@ CREATE TABLE `penjualan`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `id_pengguna`(`id_pengguna` ASC) USING BTREE,
   CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of penjualan
 -- ----------------------------
 INSERT INTO `penjualan` VALUES (1, 'INV-001', 250000.00, '2025-04-25', 5);
 INSERT INTO `penjualan` VALUES (3, 'INV-002', 17000.00, '2025-04-25', 5);
+INSERT INTO `penjualan` VALUES (4, 'INV-003', 61000.00, '2025-04-25', 5);
 
 -- ----------------------------
 -- Table structure for supplier
@@ -164,12 +170,13 @@ CREATE TABLE `supplier`  (
   `kontak_supplier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `alamat` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   PRIMARY KEY (`id_supplier`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of supplier
 -- ----------------------------
 INSERT INTO `supplier` VALUES (1, 'Wings Food', '0898983232', 'adsadsadasdasdsadsadsadsdsda');
+INSERT INTO `supplier` VALUES (3, 'Umbrella Corp', '0898983232', 'adasdaasewaeaea');
 
 -- ----------------------------
 -- Table structure for transaksi
@@ -188,7 +195,7 @@ CREATE TABLE `transaksi`  (
   INDEX `id_akun_kredit`(`id_akun_kredit` ASC) USING BTREE,
   CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_akun_debit`) REFERENCES `akun` (`id_akun`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_akun_kredit`) REFERENCES `akun` (`id_akun`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of transaksi
@@ -201,6 +208,9 @@ INSERT INTO `transaksi` VALUES (9, 'HPP dari penjualan INV-002', 'INV-002', 1240
 INSERT INTO `transaksi` VALUES (10, 'Penjualan dari kode INV-002', 'INV-002', 17000.00, 4, 5, '2025-04-25');
 INSERT INTO `transaksi` VALUES (11, 'sdadasdsdsdcaa', 'JRNL20250425145827', 2000000.00, 4, 2, '2025-04-01');
 INSERT INTO `transaksi` VALUES (12, 'Kas Awal', 'JRNL20250425150019', 25000000.00, 4, 2, '2025-04-02');
+INSERT INTO `transaksi` VALUES (13, 'PembelianPBL-003', 'PBL-003', 100000.00, 3, 4, '2025-04-25');
+INSERT INTO `transaksi` VALUES (14, 'HPP dari penjualan INV-003', 'INV-003', 55000.00, 6, 3, '2025-04-25');
+INSERT INTO `transaksi` VALUES (15, 'Penjualan dari kode INV-003', 'INV-003', 61000.00, 4, 5, '2025-04-25');
 
 -- ----------------------------
 -- View structure for jurnal
