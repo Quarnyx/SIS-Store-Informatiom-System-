@@ -17,7 +17,7 @@
         <div class="startbar-collapse" id="startbarCollapse" data-simplebar>
             <div class="d-flex align-items-start flex-column w-100">
                 <?php
-                if ($_SESSION['level'] == 'admin') {
+                if ($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'Admin') {
                     ?>
 
                     <!-- Navigation -->
