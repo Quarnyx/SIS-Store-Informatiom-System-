@@ -128,23 +128,7 @@
                                 <span>Dashboard</span>
                             </a>
                         </li><!--end nav-item-->
-                        <li class="nav-item">
-                            <a class="nav-link" href="#sidebarTransactions" data-bs-toggle="collapse" role="button"
-                                aria-expanded="false" aria-controls="sidebarTransactions">
-                                <i class="iconoir-task-list menu-icon"></i>
-                                <span>Master Data</span>
-                            </a>
-                            <div class="collapse " id="sidebarTransactions">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="?page=barang">Data Barang</a>
-                                    </li><!--end nav-item-->
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="?page=supplier">Data Supplier</a>
-                                    </li><!--end nav-item-->
-                                </ul><!--end nav-->
-                            </div><!--end startbarTables-->
-                        </li><!--end nav-item-->
+
 
                         <li class="menu-label mt-2">
                             <small class="label-border">
@@ -153,13 +137,6 @@
                             </small>
                             <span>Transaksi</span>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="?page=pembelian">
-                                <i class="iconoir-credit-cards menu-icon"></i>
-                                <span>Pembelian</span>
-                            </a>
-
-                        </li><!--end nav-item-->
                         <li class="nav-item">
                             <a class="nav-link" href="?page=penjualan">
                                 <i class="iconoir-credit-cards menu-icon"></i>
@@ -174,12 +151,6 @@
                             </small>
                             <span>Laporan</span>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="?page=laporan-pembelian">
-                                <i class="iconoir-credit-cards menu-icon"></i>
-                                <span>Laporan Pembelian</span>
-                            </a>
-                        </li><!--end nav-item-->
                         <li class="nav-item">
                             <a class="nav-link" href="?page=laporan-penjualan">
                                 <i class="iconoir-credit-cards menu-icon"></i>
