@@ -22,7 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['level'] = $user['level'];
             $_SESSION['id_pengguna'] = $user['id_pengguna'];
 
-            header('Location: index.php');
+            if ($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'Admin') {
+                header('Location: index.php');
+            } else {
+                header('Location: index.php?page=penjualan');
+            }
+
         } else {
             header("location:login.php?pass=salah");
         }

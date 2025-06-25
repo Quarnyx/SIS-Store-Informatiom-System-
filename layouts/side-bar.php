@@ -122,12 +122,6 @@
                             <span>Menu</span>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="?page=dashboard">
-                                <i class="iconoir-report-columns menu-icon"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li><!--end nav-item-->
 
 
                         <li class="menu-label mt-2">
@@ -151,12 +145,7 @@
                             </small>
                             <span>Laporan</span>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="?page=laporan-penjualan">
-                                <i class="iconoir-credit-cards menu-icon"></i>
-                                <span>Laporan Penjualan</span>
-                            </a>
-                        </li><!--end nav-item-->
+
                         <li class="nav-item">
                             <a class="nav-link" href="?page=laporan-persediaan">
                                 <i class="iconoir-credit-cards menu-icon"></i>
