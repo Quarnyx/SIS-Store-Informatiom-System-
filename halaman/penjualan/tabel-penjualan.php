@@ -74,8 +74,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Total</label>
-                                <input type="text" name="total" class="form-control" placeholder="Total"
-                                    value="<?php echo $total; ?>" id="total">
+                                <input type="text" name="total" class="form-control" placeholder="Total" id="total">
                             </div>
 
                             <div class=" mb-3">
@@ -95,6 +94,8 @@
 
 <script>
     $(document).ready(function () {
+        var total = <?php echo $total; ?>;
+        $('#total').val("Rp. " + total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
         try {
             new simpleDatatables.DataTable("#tabel-data", {
                 searchable: true,
@@ -116,6 +117,7 @@
                         if (response.status == 'success') {
                             alertify.success(response.message);
                             loadTable();
+                            loadStokList();
                         } if (response.status == 'error') {
                             alertify.error(response.message);
                         }
@@ -130,10 +132,13 @@
         });
 
         $('#bayar').on('keyup', function () {
-            var bayar = $(this).val();
-            var total = $('#total').val();
-            var kembalian = bayar - total;
-            $('#kembalian').val(kembalian);
+            var value = $(this).val().replace(/[^\d]/g, "");
+            $(this).val("Rp. " + value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
+            var total = $('#total').val().replace(/[^\d]/g, '');
+            var bayarA = $(this).val().replace(/[^\d]/g, '');
+            // console.log(parseInt(bayarA), parseInt(total));
+            var kembalian = parseInt(bayarA) - parseInt(total);
+            $('#kembalian').val("Rp. " + kembalian.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
         });
 
         $("#tambah-penjualan").submit(function (e) {

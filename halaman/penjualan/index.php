@@ -23,30 +23,8 @@ $kode = $char . sprintf("%03s", $no);
                 <form id="keranjang" enctype="multipart/form-data">
                     <input type="hidden" name="kode_penjualan" value="<?= $kode ?>">
                     <input type="hidden" name="id_pengguna" value="<?= $_SESSION['id_pengguna'] ?>">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="mb-3">
-                                <label for="simpleinput" class="form-label">Produk</label>
-                                <select class="form-select select2" data-toggle="select2" id="barang" name="id_barang">
-                                    <option value="">Pilih Produk</option>
-                                    <?php
-                                    $sql = "SELECT * FROM stok";
-                                    $result = $conn->query($sql);
-                                    while ($row = $result->fetch_assoc()) {
-                                        ?>
+                    <div class="row" id="stoklist">
 
-                                        <option value="<?= $row['id'] ?>" data-hargabeli="<?= $row['harga_beli'] ?>"
-                                            data-hargajual="<?= $row['harga_jual'] ?>" data-stock="<?= $row['stok'] ?>">
-                                            <?= $row['nama_barang'] ?> - Stok
-                                            <?= $row['stok'] ?>
-                                        </option>
-                                        <?php
-                                    }
-
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
@@ -107,40 +85,23 @@ if (isset($_POST['hapus-penjualan'])) {
         var kode_penjualan = "<?php echo $kode; ?>";
         $('#load-table').load('halaman/penjualan/tabel-penjualan.php', { kode_penjualan: kode_penjualan })
     }
+    function loadStokList() {
+        $('#stoklist').load('halaman/penjualan/stoklist.php');
+    }
     $(document).ready(function () {
-        new Selectr('.form-select');
+
         $('#lihat-transaksi').on('click', function () {
             $('.modal').modal('show');
             $('.modal-title').html('History Transaksi');
             // load form
             $('.modal-body').load('halaman/penjualan/tabel-transaksi-penjualan.php');
         });
-        $('#pelanggan').on('change', function () {
-            var alamat = $(this).find(':selected').data('alamat');
-            $('textarea[name=alamat]').val(alamat);
-        });
         loadTable();
-        $('#barang').on('change', function () {
-            var hargabeli = $(this).find(':selected').data('hargabeli');
-            var hargajual = $(this).find(':selected').data('hargajual');
-            var stock = $(this).find(':selected').data('stock');
-            $('input[name=currentstock]').val(stock);
-            $('input[name=harga_beli]').val(hargabeli);
-            $('input[name=harga_jual]').val(hargajual);
-        });
+        loadStokList();
+        setTimeout(function () {
+            new Selectr('.form-select');
+        }, 2000);
 
-        // jika qty lebih besar dari currentstock
-        $('#qty').on('input', function () {
-            var currentstock = parseInt($('#currentstock').val());
-            var qty = parseInt($('#qty').val());
-            if (qty > currentstock) {
-                alertify.error('Qty tidak boleh lebih besar dari stock');
-                // $('#qty').val(currentstock);
-                $('#tambah-barang').prop('disabled', true);
-            } else {
-                $('#tambah-barang').prop('disabled', false);
-            }
-        });
 
         $("#keranjang").submit(function (e) {
             e.preventDefault();
@@ -158,6 +119,7 @@ if (isset($_POST['hapus-penjualan'])) {
                         alertify.success(response.message);
                         $(".modal").modal('hide');
                         loadTable();
+                        loadStokList();
                     } if (response.status == 'error') {
                         alertify.error(response.message);
                     }

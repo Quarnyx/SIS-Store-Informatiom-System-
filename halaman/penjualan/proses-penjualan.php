@@ -75,7 +75,7 @@ switch ($_GET['aksi']) {
 
         // simpan penjualan ke tabel penjualan
         $id_pengguna = $_POST['id_pengguna'];
-        $total = $_POST['total'];
+        $total = preg_replace('/[^0-9]/', '', $_POST['total']);
         $sql = "INSERT INTO penjualan (id_pengguna, total, kode_penjualan, tanggal_transaksi) 
         VALUES ('$id_pengguna', '$total', '$kode_penjualan', '$tanggal_transaksi')";
         $result = $conn->query($sql);
