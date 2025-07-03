@@ -23,27 +23,10 @@ $kode = $char . sprintf("%03s", $no);
                 <form id="keranjang" enctype="multipart/form-data">
                     <input type="hidden" name="kode_penjualan" value="<?= $kode ?>">
                     <input type="hidden" name="id_pengguna" value="<?= $_SESSION['id_pengguna'] ?>">
-                    <div class="row" id="stoklist">
+                    <div id="stoklist">
 
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label class="form-label">Harga Jual</label>
-                                <input type="number" name="harga_jual" class="form-control" placeholder="Harga Jual">
-                                <input type="hidden" name="harga_beli">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label class="form-label">Qty</label>
-                                <input id="currentstock" type="hidden" name="currentstock" class="form-control"
-                                    placeholder="Qty">
-                                <input type="number" id="qty" name="qty" class="form-control" placeholder="Qty"
-                                    autocomplete="off">
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <button id="tambah-barang" type="submit"
